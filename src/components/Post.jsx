@@ -10,7 +10,10 @@ const Post = ({ post }) => {
           <h5 className="card-title">
             {post.title}
             <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-              <MdDelete onClick={() => deletepost(post.id)} />
+              <MdDelete
+                className="delete"
+                onClick={() => deletepost(post.id)}
+              />
             </span>
           </h5>
           <p className="card-text">{post.body}</p>
