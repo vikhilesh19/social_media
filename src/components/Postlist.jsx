@@ -8,12 +8,18 @@ const Postlist = () => {
   const [fetching, setfetching] = useState(false);
   useEffect(() => {
     setfetching(true);
-    fetch("https://dummyjson.com/posts")
+    const controller = new AbortController();
+    const signal = controller.signal;
+    fetch("https://dummyjson.com/posts", { signal })
       .then((res) => res.json())
       .then((data) => {
         addinitialposts(data.posts);
         setfetching(false);
       });
+    return () => {
+      console.log("Cleaning UseEffect");
+      controller.abort();
+    };
   }, []);
   const handlegetpostclick = () => {};
   return (
