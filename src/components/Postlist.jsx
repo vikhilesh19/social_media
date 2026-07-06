@@ -7,20 +7,32 @@ const Postlist = () => {
   const { postList, addinitialposts } = useContext(PostListData);
   const [fetching, setfetching] = useState(false);
   useEffect(() => {
+    if (postList.length > 0) {
+      setfetching(false);
+      return;
+    }
+
     setfetching(true);
     const controller = new AbortController();
     const signal = controller.signal;
+
     fetch("https://dummyjson.com/posts", { signal })
       .then((res) => res.json())
       .then((data) => {
         addinitialposts(data.posts);
         setfetching(false);
+      })
+      .catch((error) => {
+        if (error.name !== "AbortError") {
+          console.error("Failed to fetch posts:", error);
+        }
+        setfetching(false);
       });
+
     return () => {
-      console.log("Cleaning UseEffect");
       controller.abort();
     };
-  }, []);
+  }, [postList.length, addinitialposts]);
   const handlegetpostclick = () => {};
   return (
     <>

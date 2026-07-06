@@ -12,7 +12,7 @@ const postlistreducer = (currpostlist, action) => {
   if (action.type === "DELETE_POST") {
     newpostlist = currpostlist.filter((post) => post.id !== action.payload.id);
   } else if (action.type === "ADD_INITIAL_POSTS") {
-    newpostlist = action.payload.posts;
+    newpostlist = currpostlist.length > 0 ? currpostlist : action.payload.posts;
   } else if (action.type === "ADD_POST") {
     newpostlist = [action.payload, ...currpostlist];
   }

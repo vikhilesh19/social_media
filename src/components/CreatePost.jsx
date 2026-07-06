@@ -1,8 +1,10 @@
 import { useContext, useRef } from "react";
 import { PostList } from "../store/postListStore";
+import { useNavigate } from "react-router-dom";
 
-const CreatePost = ({ setselectedtab }) => {
+const CreatePost = () => {
   const { addpost } = useContext(PostList);
+  const navigate = useNavigate();
   const useridelement = useRef();
   const posttitleelement = useRef();
   const postbodyelement = useRef();
@@ -18,8 +20,8 @@ const CreatePost = ({ setselectedtab }) => {
     const tags = tagselement.current.value.split(" ");
     if (userid && posttitle && postbody && reactions && tags) {
       addpost(userid, posttitle, postbody, reactions, tags);
-      setselectedtab("Home");
       alert("Posted Successfully.");
+      navigate("/");
     } else {
       alert("Enter all the required fileds.");
     }
@@ -79,7 +81,6 @@ const CreatePost = ({ setselectedtab }) => {
             placeholder="How many reactions of this post"
           />
         </div>
-
         <div className="mb-3">
           <label htmlFor="tags" className="form-label">
             Enter your Hastags here
